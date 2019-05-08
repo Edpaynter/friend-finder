@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Friend Finder - Survey</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card border-0 align-self-center" style="width:95%">
+            <br>
+            <br>
+            <h3 class="card-header"> Survey</h3>
+            <div class=" card-body">
+                <form style="">
+                    <div class="form-group">
+                        <label for="input-name">Name (Required)</label>
+                        <input type="text" class="form-control" id="input-name" placeholder="Enter name">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Link to Photo</label>
+                        <input type="text" class="form-control" id="input-link" placeholder="Place link here">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="form-question-1">Q1</label>
+                        <select class="form-control" id="form-question-1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-question-2">Q2</label>
+                        <select class="form-control" id="form-question-2">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-question-3">Q3</label>
+                        <select class="form-control" id="form-question-3">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-question-4">Q4</label>
+                        <select class="form-control" id="form-question-4">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-question-5">Q5</label>
+                        <select class="form-control" id="form-question-5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+
+                    <button id="submit" type="submit" class="btn btn-primary float-right">Submit</button>
+
+                </form>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p><a href="/api/friends">API Friends List</a> | <a
+                        href="https://github.com/edpaynter/friend-finder">GitHub Repo</a></p>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+    <div id="results-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                </div>
+                <div class="modal-body">
+                    <h2 id="match-name"></h2>
+                    <img id="match-img"
+                        src="" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        // Capture the form inputs
+        $("#submit").on("click", (event) => {
+            event.preventDefault();
+
+            // Form validation
+            function validate() {
+                var isValid = true;
+                $(".form-control").each(function(){
+                    if ($(this).val() === "") {
+                        isValid = false;
+                        
+                    }
+                });
+
+                return isValid;
+            }
+
+
+            if (validate()) {
+                var userData = {
+                    name: $("#input-name").val(),
+                    photo: $("#input-link").val(),
+                    scores: [
+                        $("#form-question-1").val(),
+                        $("#form-question-2").val(),
+                        $("#form-question-3").val(),
+                        $("#form-question-4").val(),
+                        $("#form-question-5").val()
+
+                    ]
+                };
+
+                // AJAX post the data to the friends API.
+                $.post("/api/friends", userData, (data) => {
+
+                    if (userData) {
+                        console.log(data)
+                        alert("Done")
+                    }
+
+                });
+            } else {
+                alert("Please fill out all fields before submitting!");
+            }
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>
