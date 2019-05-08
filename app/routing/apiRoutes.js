@@ -19,7 +19,7 @@ module.exports = app => {
               }
 
             for(i=0;i < friendsData.length; i++){
-                var difference
+                var difference = 0
 
                 for(j=0; j < friendsData[i].scores.length; j++){
                     checkScores = Math.abs(currentUser.scores[j] - friendsData[i].scores[j]);
